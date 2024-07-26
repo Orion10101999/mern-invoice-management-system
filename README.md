@@ -14,7 +14,7 @@
 
 3. **Invoice PDF Generation**
    - Implement a feature to generate and display invoices as PDF documents.
-   - Use a library like `pdfkit` or `jspdf` for PDF generation.
+   - Use a library like `pdfkit`  for PDF generation.
 
 4. **Dashboard with Analytics**
    - The dashboard should display the total number of invoices, number of paid/unpaid invoices, and invoice amount trends (e.g., total amount per month).
