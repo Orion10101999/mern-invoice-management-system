@@ -2,9 +2,10 @@ const express = require('express');
 
 
 const { CreateInvoice, AllInvoice, UpdatedInvoice, DeleteInvoice, pdfGenerate } = require('../controllers/invoiceController.js');
+const { verifyToken } = require('../middleware/verifyUser.js');
 
 const router = express.Router();
-
+router.use(verifyToken)
 // Apply authentication middleware to all routes
 
 // Apply authorization middleware to routes that require admin access

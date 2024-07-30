@@ -1,15 +1,16 @@
 const User = require("../models/userModel.js");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { errorHandler } = require("../utils.js/error.js");
 require('dotenv').config()
-exports.registerUser = async (req, res) => {
+exports.registerUser = async (req, res,next) => {
     const { name, email, password } = req.body;
 
     try {
         let user = await User.findOne({ email });
 
         if (user) {
-            return res.status(400).json({ message: 'User already exists' });
+            return next.errorHandler({ message: 'User already exists' });
         }
 
         user = new User({
@@ -21,8 +22,11 @@ exports.registerUser = async (req, res) => {
         await user.save();
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-        res.status(201).json({
+        const expiryDate = new Date(Date.now() + 3600000); // 1 hour
+        res
+        .cookie('access_token', token, { httpOnly: true, expires: expiryDate })
+        .status(201)
+        .json({
             token,
             user: {
                 id: user._id,
@@ -32,29 +36,33 @@ exports.registerUser = async (req, res) => {
             },
         });
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        next({ message: 'Server error' });
     }
 };
 
-exports.loginUser = async (req, res) => {
+exports.loginUser = async (req, res,next) => {
     const { email, password } = req.body;
-
+    
     try {
         const user = await User.findOne({ email });
-
+        
         if (!user) {
-            return res.status(400).json({ message: 'Invalid credentials' });
+            return next(errorHandler('User Not Found'))
         }
-
+        
         const isMatch = await bcrypt.compare(password, user.password);
-
+        
         if (!isMatch) {
-            return res.status(400).json({ message: 'Invalid credentials' });
+            return next(errorHandler('Invalid Credentials'))
         }
-
+        
+        
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-        res.json({
+        
+        const expiryDate = new Date(Date.now() + 3600000); // 1 hour
+        res
+        .cookie('access_token', token, { httpOnly: true, expires: expiryDate })
+        .json({
             token,
             user: {
                 id: user._id,
@@ -64,6 +72,10 @@ exports.loginUser = async (req, res) => {
             },
         });
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        next({ message: 'Server error' });
     }
 };
+
+exports.logout = (req, res) => {
+    res.clearCookie('access_token').status(200).json('Logout success!');
+  };
