@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Bar, Pie } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
-import { useAuth } from '../context/AuthContext'; // Adjust the path as needed
+
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
-    const { user, loading , isAdmin } = useAuth();
+    
     const navigate = useNavigate();
 
     const [totalInvoices, setTotalInvoices] = useState(0);
@@ -13,11 +13,6 @@ const Dashboard = () => {
     const [amountTrends, setAmountTrends] = useState([]);
 
     useEffect(() => {
-        if (loading) return;
-        if (!user) {
-            navigate('/no-access'); // Redirect if not an admin
-            return;
-        }
 
         fetch('/api/analytics/total-invoices')
             .then(res => res.json())
@@ -30,9 +25,8 @@ const Dashboard = () => {
         fetch('/api/analytics/amount-trends')
             .then(res => res.json())
             .then(data => setAmountTrends(data));
-    }, [loading, user, navigate]);
+    }, [navigate]);
 
-    if (loading) return <div>Loading...</div>;
 
     const statusData = {
         labels: ['Paid', 'Unpaid'],

@@ -4,41 +4,36 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import Dashboard from './components/Dashboard';
-import { AuthProvider } from './context/AuthContext';
-import NoAccess from './components/NoAccess';
+import InvoiceList from './components/InvoiceList';
+import InvoiceForm from './components/InvoiceForm';
+import PrivateRoute from './components/PrivatetRoute';
 
+import Navbar from './components/Navbar';
+import Logout from './pages/Logout';
 const App = () => {
+ 
   return (
-    <AuthProvider>
-
-    <Router>
-      <div className="min-h-screen flex flex-col">
-        <nav className="bg-gray-700 text-white p-4">
-          <div className='container mx-auto flex gap-8 justify-between'>
-
-          <div className="flex gap-5">
-            <Link to="/" className="font-bold">Invoice App</Link>
+  <>
+      <Router>
+        <div className="min-h-screen flex flex-col">
+          <Navbar/>
+          <div className="container mx-auto p-4 flex-grow">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/logout" element={<Logout />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route element={<PrivateRoute />}>
+              <Route path='/invoice-form' element={<InvoiceForm />} />
+              <Route path='/invoice-list' element={<InvoiceList />} />
+              </Route>
+            </Routes>
           </div>
-            <div className='flex justify-end'>
-              <Link to="/register" className="mr-4">Register</Link>
-              <Link to="/login">Login</Link>
-            </div>
-          </div>
-        </nav>
-        <div className="container mx-auto p-4 flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            
-            <Route path="/dashboard" element={<Dashboard />} />
-            
-            <Route path="/no-access" element={<NoAccess />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
         </div>
-      </div>
-    </Router>
-    </AuthProvider>
+      </Router>
+  </>
+    
   );
 };
 
