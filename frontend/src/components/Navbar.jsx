@@ -23,8 +23,8 @@ const Navbar = () => {
                         <Link to="/logout" className="font-bold">Logout</Link>
                     ) : (
                         <>
-                            <Link to="/register" className="font-bold">Register</Link>
                             <Link to="/login" className="font-bold">Login</Link>
+                            <Link to="/register" className="font-bold">Register</Link>
                         </>
                     )}
                 </div>
