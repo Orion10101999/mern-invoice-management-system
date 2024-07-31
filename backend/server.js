@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const express = require("express");
 const cors = require('cors')
-
+const path = require('path')
 var cookieParser = require('cookie-parser')
 
 var app = express()
@@ -25,6 +25,15 @@ app.use('/api/analytics', require("./src/routes/analyticsRoute.js"));
 app.listen(3000, function(){
     console.log("Server is Running 3000");
 })
+
+const dirname = path.resolve();
+
+app.use(express.static(path.join(dirname, '/client/dist')));
+
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(dirname, 'client', 'dist', 'index.html'));
+})  
 
 
 
