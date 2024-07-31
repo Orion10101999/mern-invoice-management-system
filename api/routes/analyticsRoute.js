@@ -1,7 +1,8 @@
-const express = require('express');
+
+import express from 'express'
 
 
-const { totalInvoices, invoiceStatusCount, amountTrends } = require('../controllers/analyticsController.js');
+import { totalInvoices, invoiceStatusCount, amountTrends } from '../controllers/analyticsController.js'
 
 const router = express.Router();
 
@@ -12,4 +13,4 @@ router.get('/total-invoices', totalInvoices);
 router.get('/invoice-status-count', invoiceStatusCount);
 router.get('/amount-trends', amountTrends);
 
-module.exports = router;
+export default router;

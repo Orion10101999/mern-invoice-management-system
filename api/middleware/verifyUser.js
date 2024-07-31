@@ -1,7 +1,8 @@
-const jwt = require('jsonwebtoken')
-const { errorHandler } = require('../utils.js/error');
 
-exports.verifyToken = (req, res, next) => {
+import jwt from 'jsonwebtoken'
+import errorHandler from '../utils/error.js'
+
+const verifyToken = (req, res, next) => {
     const token = req.cookies.access_token;
 
     if (!token) return next(errorHandler(401, 'You are not authenticated!'));
@@ -15,3 +16,5 @@ exports.verifyToken = (req, res, next) => {
 
 
 }
+
+export default verifyToken

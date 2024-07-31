@@ -1,8 +1,6 @@
-const PDFDocument = require('pdfkit');
-const fs = require('fs');
-const path = require('path');
-const Invoice = require('../models/invoiceModel.js')
 
+import PDFDocument from 'pdfkit'
+import Invoice from '../models/invoiceModel.js';
 
 const CreateInvoice = async (req , res) => {
     const { invoiceNumber, customerName, amount, dueDate, status } = req.body;
@@ -88,5 +86,5 @@ const pdfGenerate = ( async (req, res) => {
 
 
 
-module.exports = {CreateInvoice , AllInvoice ,UpdatedInvoice , DeleteInvoice , pdfGenerate}
+export {CreateInvoice , AllInvoice ,UpdatedInvoice , DeleteInvoice , pdfGenerate}
 

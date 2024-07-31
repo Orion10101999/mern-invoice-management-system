@@ -1,5 +1,5 @@
 
-const Invoice = require('../models/invoiceModel.js'); // Assuming Invoice is your model
+import Invoice from '../models/invoiceModel.js'
 
 const totalInvoices = ( async (req, res) => {
     try {
@@ -37,4 +37,4 @@ const amountTrends = ( async (req, res) => {
     }
 });
 
-module.exports = {totalInvoices , invoiceStatusCount , amountTrends}
+export {totalInvoices , invoiceStatusCount , amountTrends}

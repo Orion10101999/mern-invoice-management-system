@@ -1,15 +1,21 @@
-const mongoose = require("mongoose")
-const express = require("express");
-const cors = require('cors')
-const path = require('path')
-var cookieParser = require('cookie-parser')
-require('dotenv').config()
-var app = express()
+
+import 'dotenv/config'
+import cookieParser from 'cookie-parser';
+import path from 'path';
+import cors from 'cors'
+import express from 'express'
+import mongoose from 'mongoose';
+
+
+
+const app = express()
+
+
+
 app.use(cookieParser())
-
-
-
+app.use(express.json());
 app.use(cors())
+
 
 mongoose.connect(process.env.MONGO_URI)
 .then(() =>     
@@ -18,10 +24,15 @@ mongoose.connect(process.env.MONGO_URI)
 .catch(err =>
   console.log("Could not connect to MongoDB")
 )
-app.use(express.json());
-app.use('/api/auth', require("./src/routes/authRoutes.js"));
-app.use('/api/invoices', require("./src/routes/invoiceRoutes.js"));
-app.use('/api/analytics', require("./src/routes/analyticsRoute.js"));
+
+import authRote from './api/routes/authRoutes.js'
+import invoiceRoute from './api/routes/invoiceRoutes.js' 
+import analyticsRoute from './api/routes/analyticsRoute.js'
+
+app.use('/api/auth',authRote);
+app.use('/api/invoices', invoiceRoute);
+app.use('/api/analytics', analyticsRoute);
+
 app.listen(process.env.PORT || 3000, function(){
     console.log("Server is Running 3000");
 })

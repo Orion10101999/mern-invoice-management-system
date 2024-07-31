@@ -1,12 +1,14 @@
-const express = require('express');
 
+import express from 'express'
 
-const { CreateInvoice, AllInvoice, UpdatedInvoice, DeleteInvoice, pdfGenerate } = require('../controllers/invoiceController.js');
-const { verifyToken } = require('../middleware/verifyUser.js');
+import { CreateInvoice, AllInvoice, UpdatedInvoice, DeleteInvoice, pdfGenerate } from '../controllers/invoiceController.js'
+import verifyToken from '../middleware/verifyUser.js';
+
 
 const router = express.Router();
-router.use(verifyToken)
+
 // Apply authentication middleware to all routes
+router.use(verifyToken)
 
 // Apply authorization middleware to routes that require admin access
 router.post('/', CreateInvoice);
@@ -15,4 +17,4 @@ router.put('/:id', UpdatedInvoice);
 router.delete('/:id', DeleteInvoice);
 router.get('/:id/pdf', pdfGenerate); // PDF generation requires authentication
 
-module.exports = router;
+export default router;

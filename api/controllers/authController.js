@@ -1,9 +1,10 @@
-const User = require("../models/userModel.js");
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { errorHandler } = require("../utils.js/error.js");
-require('dotenv').config()
-exports.registerUser = async (req, res,next) => {
+
+import User from '../models/userModel.js';
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+import errorHandler from '../utils/error.js'
+
+const registerUser = async (req, res,next) => {
     const { name, email, password } = req.body;
 
     try {
@@ -40,7 +41,7 @@ exports.registerUser = async (req, res,next) => {
     }
 };
 
-exports.loginUser = async (req, res,next) => {
+const loginUser = async (req, res,next) => {
     const { email, password } = req.body;
     
     try {
@@ -76,6 +77,8 @@ exports.loginUser = async (req, res,next) => {
     }
 };
 
-exports.logout = (req, res) => {
+const logout = (req, res) => {
     res.clearCookie('access_token').status(200).json('Logout success!');
   };
+
+export {logout , loginUser , registerUser}

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const invoiceSchema = new mongoose.Schema({
   invoiceNumber: { type: String, required: true },
@@ -10,4 +10,4 @@ const invoiceSchema = new mongoose.Schema({
 
 const Invoice = mongoose.model('Invoice', invoiceSchema);
 
-module.exports = Invoice;
+export default Invoice;
