@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require('cors')
 const path = require('path')
 var cookieParser = require('cookie-parser')
-
+require('dotenv').config()
 var app = express()
 app.use(cookieParser())
 
@@ -11,7 +11,7 @@ app.use(cookieParser())
 
 app.use(cors())
 
-mongoose.connect("mongodb://127.0.0.1:27017/mern-invoice-management-system")
+mongoose.connect(process.env.MONGO_URI)
 .then(() =>     
   console.log("Connected to MongoDB")
 )
@@ -22,7 +22,7 @@ app.use(express.json());
 app.use('/api/auth', require("./src/routes/authRoutes.js"));
 app.use('/api/invoices', require("./src/routes/invoiceRoutes.js"));
 app.use('/api/analytics', require("./src/routes/analyticsRoute.js"));
-app.listen(3000, function(){
+app.listen(process.env.PORT || 3000, function(){
     console.log("Server is Running 3000");
 })
 
