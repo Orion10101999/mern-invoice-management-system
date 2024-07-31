@@ -4,6 +4,7 @@ import InvoiceForm from '../components/InvoiceForm';
 import InvoiceList from '../components/InvoiceList';
 import { Link } from 'react-router-dom';
 import Login from './Login';
+import Dashboard from '../components/Dashboard';
 
 const Home = () => {
   const { currentUser } = useSelector((state) => state.user);
